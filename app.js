@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 var items = ["Ride Bike", "Water the plants", "Do Rubix Cube"];
+var workItems = [];
 //app that's generated using express to use ejs as a view engine
 app.set('view engine', 'ejs');
 
@@ -24,17 +25,43 @@ app.get("/", function (req, res) {
     var day = today.toLocaleDateString("en-US", options);
 
     res.render('list', {
-        kindOfDay: day,
+        listTitle: day,
         newListItems: items
     })
 });
 
 app.post("/", function (req, res) {
+
     var item = req.body.newItem;
-    items.push(item);
-    res.redirect("/");
+    console.log(req.body);
+
+    if (req.body.list === "Work") {
+        workItems.push(item);
+        res.redirect("/work");
+    } else {
+        items.push(item);
+        res.redirect("/");
+    }
+
+
 })
 
+app.get("/work", function (req, res) {
+    res.render('list', {
+        listTitle: "Work List",
+        newListItems: workItems
+    })
+})
+
+app.post("/work", function (req, res) {
+    var item = req.body.newItem;
+    workItems.push(item);
+    res.redirect("/work");
+})
+
+app.get("/about", function (req, res) {
+    res.render("about");
+})
 app.listen(3000, function () {
     console.log("Server started on port 3000.");
 });
