@@ -4,27 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
 
-    <% if(kindOfDay==="Saturday" || kindOfDay==="Sunday"){ %>
-    <h1>It's a <%= kindOfDay %></h1>
-    <%} else %>
-    <%{ %>
-    <h1>It's a <%= kindOfDay %></h1>
-    <%} %>
+    <div class="box" id="heading">
+        <h1><%= kindOfDay %></h1>
+    </div>
+    <div class="box">
 
-    <ul>
-        <% for( var i =0; i<newListItems.length; i++){ %>
-        <li><%=newListItems[i]%></li>
+        <% for( let i =0; i<newListItems.length; i++){ %>
+        <div class="item">
+            <input type="checkbox">
+            <p><%=newListItems[i]%></p>
+        </div>
         <% } %>
-    </ul>
 
-    <form class="" action="/" method="post">
-        <input type="text" name="newItem">
-        <button type="text" name="button">Add</button>
-    </form>
+        <form class="item" action="/" method="post">
+            <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+            <button type="text" name="button">+</button>
+        </form>
+    </div>
+
+
+
 </body>
 
 </html>

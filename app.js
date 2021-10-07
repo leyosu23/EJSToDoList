@@ -2,17 +2,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const app = express();
-var items = ["Sleep", "Eat", "Exercise"];
+var items = ["Ride Bike", "Water the plants", "Do Rubix Cube"];
 //app that's generated using express to use ejs as a view engine
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(express.static("public"))
 
 app.get("/", function (req, res) {
     var today = new Date();
-    var currentDay = today.getDay();
 
     var options = {
         weekday: "long",
