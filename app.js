@@ -10,7 +10,7 @@ app.get("/", function (req, res) {
     var currentDay = today.getDay();
     var day = "";
 
-    switch (day) {
+    switch (currentDay) {
         case 0:
             day = "Sunday";
             break;
