@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 
 const app = express();
-const items = ["Ride Bike", "Water the plants", "Do Rubix Cube"];
+//const items = ["Ride Bike", "Water the plants", "Do Rubix Cube"];
 const workItems = [];
 //app that's generated using express to use ejs as a view engine
 app.set('view engine', 'ejs');
@@ -38,21 +38,31 @@ const item3 = new Item({
 
 const defaultItems = [item1, item2, item3];
 
-Item.insertMany(defaultItems, function (err) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log("Successfully inserted!");
-    }
-})
+
 
 // default route
 app.get("/", function (req, res) {
 
-    res.render('list', {
-        listTitle: "Today",
-        newListItems: items
-    })
+    Item.find({}, function (err, item) {
+        if (item.length === 0) {
+            Item.insertMany(defaultItems, function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Successfully inserted!");
+                }
+            });
+            res.redirect("/");
+        } else {
+            res.render('list', {
+                listTitle: "Today",
+                newListItems: item
+            })
+        }
+
+    });
+
+
 });
 
 app.post("/", function (req, res) {
