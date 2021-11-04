@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 
 
 const app = express();
-//const items = ["Ride Bike", "Water the plants", "Do Rubix Cube"];
 const workItems = [];
 //app that's generated using express to use ejs as a view engine
 app.set('view engine', 'ejs');
@@ -67,18 +66,25 @@ app.get("/", function (req, res) {
 
 app.post("/", function (req, res) {
 
-    let item = req.body.newItem;
-    console.log(req.body);
+    const itemName = req.body.newItem;
+    const item = new Item({
+        name: itemName
+    });
+    item.save();
+    res.redirect("/");
 
-    if (req.body.list === "Work") {
-        workItems.push(item);
-        res.redirect("/work");
-    } else {
-        items.push(item);
-        res.redirect("/");
-    }
+})
 
-
+app.post("/delete", function (req, res) {
+    const checkItemId = req.body.checkBox;
+    Item.findByIdAndRemove(checkItemId, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Successfully removed");
+        }
+    })
+    res.redirect("/");
 })
 
 app.get("/work", function (req, res) {
